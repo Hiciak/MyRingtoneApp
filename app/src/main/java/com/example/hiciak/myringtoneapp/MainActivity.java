@@ -1,19 +1,23 @@
 package com.example.hiciak.myringtoneapp;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.media.MediaPlayer;
+import android.media.audiofx.Visualizer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import java.io.IOException;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myTestMethod();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,5 +39,11 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void myTestMethod() {
+//        Visualizer visualizer = new Visualizer();
+        MediaPlayer mp = MediaPlayer.create(this, R.raw.test_song);
+        mp.start();
     }
 }
