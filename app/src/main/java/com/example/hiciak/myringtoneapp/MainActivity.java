@@ -19,7 +19,10 @@ import java.io.IOException;
 
 public class MainActivity extends Activity {
 
-    LinearLayout mainLinearLayout;
+    private LinearLayout mainLinearLayout;
+    private MediaPlayer myMediaPlayer;
+    private Visualizer myVisualizer;
+    private MyWaveformView myWaveformView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +54,69 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void myTestMethod() {
-//        Visualizer visualizer = new Visualizer();
-//        MediaPlayer mp = MediaPlayer.create(this, R.raw.test_song);
-//        mp.start();
+    private int myMediaPlayerInstantiator() {
+        this.myMediaPlayer = MediaPlayer.create(this, R.raw.test_song);
+        int audioSessionId = 0;
+        audioSessionId = this.myMediaPlayer.getAudioSessionId();
+        Log.i(GlobParam.LOG_TAG, "AudioSessionId is: " + audioSessionId);
+        return audioSessionId;
+    }
 
-        MyWaveformView myWaveformView = new MyWaveformView(this);
+    private void myVisualizerInstantiator(int audioSessionId) {
+
+        //Instantiation of Waveform view
+        this.myWaveformView = new MyWaveformView(this);
 
         int viewHeight = (int) (150 * this.getResources().getDisplayMetrics().density);
         ViewGroup.LayoutParams myWaveformViewParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, viewHeight);
         myWaveformView.setLayoutParams(myWaveformViewParameters);
 
         this.mainLinearLayout.addView(myWaveformView);
+
+        //Instantiation of the visualizer
+        this.myVisualizer = new Visualizer(audioSessionId);
+
+        this.myVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+
+        Visualizer.OnDataCaptureListener myOnDataCaptureListener = new Visualizer.OnDataCaptureListener() {
+            @Override
+            public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int i) {
+                if(MainActivity.this.myWaveformView != null) {
+                   MainActivity.this.myWaveformView.updateVisualitzerView(bytes);
+                }
+            }
+
+            @Override
+            public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int i) {
+
+            }
+        };
+        this.myVisualizer.setDataCaptureListener(myOnDataCaptureListener, Visualizer.getMaxCaptureRate(), true, false);
+
+
+        this.myVisualizer.setEnabled(true);
+    }
+
+    private void myTestMethod() {
+
+        int audioSessionId = myMediaPlayerInstantiator();
+
+        if(audioSessionId != 0) {
+            myVisualizerInstantiator(audioSessionId);
+            this.myMediaPlayer.start();
+        }
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(this.isFinishing() && this.myMediaPlayer != null) {
+            this.myVisualizer.release();
+            this.myMediaPlayer.stop();
+            this.myMediaPlayer.release();
+        }
     }
 }
