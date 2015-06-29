@@ -36,7 +36,7 @@ public class AudioEffectDemo extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
-        setVolumeControlStream(AudioManager.STREAM_MUSIC);
+        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
         mStatusTextView = new TextView(this);
 

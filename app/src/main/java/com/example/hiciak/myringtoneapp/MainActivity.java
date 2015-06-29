@@ -7,15 +7,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+
+import com.example.hiciak.myringtoneapp.custom_views.MyWaveformView;
+import com.example.hiciak.myringtoneapp.parameters.GlobParam;
+
 import java.io.IOException;
 
 
 public class MainActivity extends Activity {
 
+    LinearLayout mainLinearLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        this.setContentView(R.layout.activity_main);
+        this.mainLinearLayout = (LinearLayout) findViewById(R.id.ll_main_container);
         myTestMethod();
     }
 
@@ -43,7 +53,15 @@ public class MainActivity extends Activity {
 
     private void myTestMethod() {
 //        Visualizer visualizer = new Visualizer();
-        MediaPlayer mp = MediaPlayer.create(this, R.raw.test_song);
-        mp.start();
+//        MediaPlayer mp = MediaPlayer.create(this, R.raw.test_song);
+//        mp.start();
+
+        MyWaveformView myWaveformView = new MyWaveformView(this);
+
+        int viewHeight = (int) (150 * this.getResources().getDisplayMetrics().density);
+        ViewGroup.LayoutParams myWaveformViewParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, viewHeight);
+        myWaveformView.setLayoutParams(myWaveformViewParameters);
+
+        this.mainLinearLayout.addView(myWaveformView);
     }
 }
