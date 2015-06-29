@@ -13,14 +13,14 @@ import com.example.hiciak.myringtoneapp.parameters.GlobParam;
 /**
  * Created by hiciak on 29/06/15.
  */
-public class MyWaveformView extends View {
+public class MyDynamicWaveformView extends View {
 
     private Paint myPaint;
     private Rect paintingContainer;
     private byte[] mBytes;
     private float[] mPoints;
 
-    public MyWaveformView(Context context) {
+    public MyDynamicWaveformView(Context context) {
         super(context);
         init();
     }
@@ -50,7 +50,7 @@ public class MyWaveformView extends View {
             if(this.mPoints == null || this.mPoints.length < this.mBytes.length * 4) {
                 this.mPoints = new float[this.mBytes.length * 4];
             } else {
-                Log.i(GlobParam.LOG_TAG, "this.mPoints != null");
+                //Log.i(GlobParam.LOG_TAG, "this.mPoints != null");
             }
 
             this.paintingContainer.set(0, 0, this.getWidth(), this.getHeight());
@@ -65,7 +65,7 @@ public class MyWaveformView extends View {
             }
             canvas.drawLines(mPoints, this.myPaint);
         } else {
-            Log.i(GlobParam.LOG_TAG, "this.mBytes == null");
+            //Log.i(GlobParam.LOG_TAG, "this.mBytes == null");
         }
 
 

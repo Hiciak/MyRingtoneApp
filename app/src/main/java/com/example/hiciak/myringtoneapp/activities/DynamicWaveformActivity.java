@@ -1,4 +1,4 @@
-package com.example.hiciak.myringtoneapp;
+package com.example.hiciak.myringtoneapp.activities;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
@@ -7,27 +7,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.hiciak.myringtoneapp.custom_views.MyWaveformView;
+import com.example.hiciak.myringtoneapp.R;
+import com.example.hiciak.myringtoneapp.custom_views.MyDynamicWaveformView;
 import com.example.hiciak.myringtoneapp.parameters.GlobParam;
 
-import java.io.IOException;
 
-
-public class MainActivity extends Activity {
+public class DynamicWaveformActivity extends Activity {
 
     private LinearLayout mainLinearLayout;
     private MediaPlayer myMediaPlayer;
     private Visualizer myVisualizer;
-    private MyWaveformView myWaveformView;
+    private MyDynamicWaveformView myWaveformView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(R.layout.activity_main);
+        this.setContentView(R.layout.activity_dynamic_waveform);
         this.mainLinearLayout = (LinearLayout) findViewById(R.id.ll_main_container);
         myTestMethod();
     }
@@ -65,7 +63,7 @@ public class MainActivity extends Activity {
     private void myVisualizerInstantiator(int audioSessionId) {
 
         //Instantiation of Waveform view
-        this.myWaveformView = new MyWaveformView(this);
+        this.myWaveformView = new MyDynamicWaveformView(this);
 
         int viewHeight = (int) (150 * this.getResources().getDisplayMetrics().density);
         ViewGroup.LayoutParams myWaveformViewParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, viewHeight);
@@ -81,8 +79,8 @@ public class MainActivity extends Activity {
         Visualizer.OnDataCaptureListener myOnDataCaptureListener = new Visualizer.OnDataCaptureListener() {
             @Override
             public void onWaveFormDataCapture(Visualizer visualizer, byte[] bytes, int i) {
-                if(MainActivity.this.myWaveformView != null) {
-                   MainActivity.this.myWaveformView.updateVisualitzerView(bytes);
+                if(DynamicWaveformActivity.this.myWaveformView != null) {
+                   DynamicWaveformActivity.this.myWaveformView.updateVisualitzerView(bytes);
                 }
             }
 
