@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hiciak.myringtoneapp.R;
 import com.example.hiciak.myringtoneapp.waveform_master.custom_views.MarkerView;
@@ -168,11 +169,18 @@ public abstract class WaveformFragment extends Fragment implements MarkerView.Ma
         mTouchInitialOffset = mOffset;
         mFlingVelocity = 0;
         mWaveformTouchStartMsec = System.currentTimeMillis();
+
+        /**/
+        Toast.makeText(this.getActivity(), "Screen touched, x values is: " + x, Toast.LENGTH_SHORT).show();
+        /**/
     }
 
     public void waveformTouchMove(float x) {
         mOffset = trap((int) (mTouchInitialOffset + (mTouchStart - x)));
         updateDisplay();
+        /**/
+        Toast.makeText(this.getActivity(), "Screen moved, x value is: " + x, Toast.LENGTH_SHORT).show();
+        /**/
     }
 
     public void waveformTouchEnd() {
@@ -192,6 +200,9 @@ public abstract class WaveformFragment extends Fragment implements MarkerView.Ma
                 onPlay((int) (mTouchStart + mOffset));
             }
         }
+        /**/
+        Toast.makeText(this.getActivity(), "Screen touch released!", Toast.LENGTH_SHORT).show();
+        /**/
     }
 
     public void waveformFling(float vx) {

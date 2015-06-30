@@ -21,12 +21,14 @@ import android.graphics.Canvas;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 
 import com.example.hiciak.myringtoneapp.R;
+import com.example.hiciak.myringtoneapp.parameters.GlobParam;
 import com.example.hiciak.myringtoneapp.waveform_master.soundfile.CheapSoundFile;
 
 /**
@@ -180,6 +182,7 @@ public class WaveformView extends View {
                 mListener.waveformTouchEnd();
                 break;
         }
+     //   Log.i(GlobParam.LOG_TAG, "Ha entrat en WaveformView en onTouchEvent");
         return true;
     }
 
@@ -303,10 +306,13 @@ public class WaveformView extends View {
         mTimecodePaint.setTextSize((int) (12 * density));
 
         invalidate();
+
+    //    Log.i(GlobParam.LOG_TAG, "Ha entrat en WaveformView en recomputeHeights");
     }
 
     protected void drawWaveformLine(Canvas canvas, int x, int y0, int y1, Paint paint) {
         canvas.drawLine(x, y0, x, y1, paint);
+    //    Log.i(GlobParam.LOG_TAG, "Ha entrat en WaveformView en drawWaveformLine");
     }
 
     @Override
@@ -420,6 +426,7 @@ public class WaveformView extends View {
         if (i + start == mPlaybackPos) {
             canvas.drawLine(i, 0, i, measuredHeight, mPlaybackLinePaint);
         }
+      //  Log.i(GlobParam.LOG_TAG, "Ha entrat en WaveformView en drawWaveform");
     }
 
     protected Paint selectWaveformPaint(final int i, final int start) {
@@ -434,6 +441,7 @@ public class WaveformView extends View {
     }
 
     protected float getGain(int i, int numFrames, int[] frameGains) {
+    //    Log.i(GlobParam.LOG_TAG, "Ha entrat en WaveformView en getGain");
         int x = Math.min(i, numFrames - 1);
         if (numFrames < 2) {
             return frameGains[x];
@@ -461,6 +469,7 @@ public class WaveformView extends View {
      * Called once when a new sound file is added
      */
     protected void computeDoublesForAllZoomLevels() {
+       // Log.i(GlobParam.LOG_TAG, "Ha entrat en WaveformView en computeDoublesForAllZoomLevels");
         int numFrames = mSoundFile.getNumFrames();
 
         // Make sure the range is no more than 0 - 255

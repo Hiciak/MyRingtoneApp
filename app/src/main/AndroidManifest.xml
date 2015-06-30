@@ -29,6 +29,10 @@
             android:name=".activities.WholeSongWaveformActivity"
             android:label="@string/title_activity_waveform_master" >
         </activity>
+        <activity
+            android:name=".waveform_master.activities.ChooseSongActivity"
+            android:label="@string/title_activity_choose_song" >
+        </activity>
     </application>
 
 </manifest>
