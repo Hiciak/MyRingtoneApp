@@ -4,4 +4,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_whole_song_waveform">WholeSongWaveformActivity</string>
+    <string name="title_activity_waveform_master">WaveformMasterActivity</string>
 </resources>
